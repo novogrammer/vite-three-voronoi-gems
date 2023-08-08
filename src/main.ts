@@ -5,6 +5,7 @@ import { GroundProjectedSkybox } from 'three/addons/objects/GroundProjectedSkybo
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import {OrbitControls} from "three/addons/controls/OrbitControls.js"
 import Voronoi from "voronoi";
+import gsap from 'gsap';
 
 const appElement=document.querySelector<HTMLDivElement>('#app')!;
 appElement.innerHTML = `
@@ -65,6 +66,14 @@ const renderer = new THREE.WebGLRenderer({
 // }
 
 {
+  const tlMain=gsap.timeline({
+    yoyo:true,
+    repeat:-1,
+    onRepeat:()=>{
+      console.log("onRepeat");
+    }
+  });
+
 
   const points2d:{x:number,y:number}[]=[];
   const group = new THREE.Group();
@@ -138,8 +147,21 @@ const renderer = new THREE.WebGLRenderer({
     mesh.position.set(site.x,site.y,0);
     group.add(mesh);
     meshList.push(mesh);
+    const tlMesh=gsap.timeline();
+    tlMesh.to(mesh.position,{
+      x:site.x*1.5,
+      y:site.y*1.5,
+      duration:1,
+    },0);
+    // tlMesh.to(mesh.rotation,{
+    //   x:360*1*THREE.MathUtils.DEG2RAD,
+    //   y:360*3*THREE.MathUtils.DEG2RAD,
+    //   duration:1,
+    // },0);
+    tlMain.add(tlMesh,0.5);
     
   }
+  tlMain.call(()=>null,[],2);
 }
 
 
