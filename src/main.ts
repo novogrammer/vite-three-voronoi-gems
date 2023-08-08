@@ -49,20 +49,20 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 
-{
-  const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-  const material = new THREE.MeshPhysicalMaterial({
-    color: 0x00ff00,
-    metalness:0,
-    roughness:0,
-    ior:1.7,
-    transmission:0.75,
-    thickness:0.2,
-  });
-  const cube = new THREE.Mesh( geometry, material );
-  scene.add( cube );
-  cube.position.y=1;
-}
+// {
+//   const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+//   const material = new THREE.MeshPhysicalMaterial({
+//     color: 0x00ff00,
+//     metalness:0,
+//     roughness:0,
+//     ior:1.7,
+//     transmission:0.75,
+//     thickness:0.2,
+//   });
+//   const cube = new THREE.Mesh( geometry, material );
+//   scene.add( cube );
+//   cube.position.y=1;
+// }
 
 {
 
