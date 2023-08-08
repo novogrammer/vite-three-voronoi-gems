@@ -48,7 +48,6 @@ const renderer = new THREE.WebGLRenderer({
   canvas:renderCanvasElement,
 });
 
-document.body.appendChild( renderer.domElement );
 
 {
   const geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -130,7 +129,7 @@ camera.position.z = 5;
 
 const orbitControls=new OrbitControls(camera,renderer.domElement);
 orbitControls.target.set( 0, 2, 0 );
-orbitControls.autoRotate=true;
+// orbitControls.autoRotate=true;
 orbitControls.update();
 
 
