@@ -92,7 +92,16 @@ const renderer = new THREE.WebGLRenderer({
   const meshList:THREE.Mesh[]=[];
 
 
-
+  const pickColor=(()=>{
+    const colorList=[
+      new THREE.Color("#c0c0c0"),
+      new THREE.Color("#ff0000"),
+      new THREE.Color("#00ff00"),
+      new THREE.Color("#4040ff"),
+      new THREE.Color("#ffff00"),
+    ];
+    return colorList[Math.floor(Math.random()*colorList.length)];
+  });
   const vTop=new THREE.Vector3(0,0,0.1);
   const vBottom=new THREE.Vector3(0,0,-0.1);
   for(let cell of diagram.cells){
@@ -111,12 +120,17 @@ const renderer = new THREE.WebGLRenderer({
     }
     const geometry = new THREE.BufferGeometry().setFromPoints(geometryPoints);
     geometry.computeVertexNormals();
+    // const h=Math.random();
+    // const h=Math.floor(Math.random()*6)/6;
+    // const h=Math.floor(Math.random()*3)/3;
+    // const color=new THREE.Color().setHSL(h,1,0.5);
+    const color=pickColor();
     const material = new THREE.MeshPhysicalMaterial({
-      color: 0x00ff00,
+      color,
       metalness:0,
       roughness:0,
       ior:1.7,
-      transmission:0.75,
+      transmission:1,
       thickness:0.2,
     });
     const mesh=new THREE.Mesh(geometry,material);
