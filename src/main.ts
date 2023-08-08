@@ -73,7 +73,7 @@ const renderer = new THREE.WebGLRenderer({
   const length=3;
   const temporaryVector2D=new THREE.Vector2();
   for(let i=0;i<250;i+=1){
-    temporaryVector2D.random().subScalar(0.5).multiplyScalar(length*2);
+    temporaryVector2D.random().subScalar(0.5).multiplyScalar(length);
     points2d.push({
       x:temporaryVector2D.x,
       y:temporaryVector2D.y,
@@ -98,10 +98,11 @@ const renderer = new THREE.WebGLRenderer({
     for(let i=0;i<cell.halfedges.length;i+=1){
       const halfedges=cell.halfedges[i];
       const {x,y}=halfedges.site;
-      const {va,vb}=halfedges.edge;
+      const startPoint=halfedges.getStartpoint();
+      const endPoint=halfedges.getEndpoint();
       const pointO=new THREE.Vector3(x,y,0.1);
-      const pointA=new THREE.Vector3(va.x,va.y,0);
-      const pointB=new THREE.Vector3(vb.x,vb.y,0);
+      const pointB=new THREE.Vector3(startPoint.x,startPoint.y,0);
+      const pointA=new THREE.Vector3(endPoint.x,endPoint.y,0);
       geometryPoints.push(pointO,pointA,pointB);
 
     }
@@ -114,7 +115,6 @@ const renderer = new THREE.WebGLRenderer({
       ior:1.7,
       transmission:0.75,
       thickness:0.2,
-      side:THREE.DoubleSide,// TODO:反転処理
     });
     const mesh=new THREE.Mesh(geometry,material);
     group.add(mesh);
@@ -125,7 +125,7 @@ const renderer = new THREE.WebGLRenderer({
 
 
 camera.position.y = 2;
-camera.position.z = 5;
+camera.position.z = 3;
 
 const orbitControls=new OrbitControls(camera,renderer.domElement);
 orbitControls.target.set( 0, 2, 0 );
