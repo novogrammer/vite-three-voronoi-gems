@@ -93,6 +93,8 @@ const renderer = new THREE.WebGLRenderer({
 
 
 
+  const vTop=new THREE.Vector3(0,0,0.1);
+  const vBottom=new THREE.Vector3(0,0,-0.1);
   for(let cell of diagram.cells){
     const geometryPoints:THREE.Vector3[]=[];
     for(let i=0;i<cell.halfedges.length;i+=1){
@@ -100,10 +102,11 @@ const renderer = new THREE.WebGLRenderer({
       const {x,y}=halfedges.site;
       const startPoint=halfedges.getStartpoint();
       const endPoint=halfedges.getEndpoint();
-      const pointO=new THREE.Vector3(x,y,0.1);
-      const pointB=new THREE.Vector3(startPoint.x,startPoint.y,0);
-      const pointA=new THREE.Vector3(endPoint.x,endPoint.y,0);
-      geometryPoints.push(pointO,pointA,pointB);
+      const pointO=new THREE.Vector3(x,y,0);
+      const pointA=new THREE.Vector3(startPoint.x,startPoint.y,0);
+      const pointB=new THREE.Vector3(endPoint.x,endPoint.y,0);
+      geometryPoints.push(pointO.clone().add(vBottom),pointA,pointB);
+      geometryPoints.push(pointO.clone().add(vTop),pointB,pointA);
 
     }
     const geometry = new THREE.BufferGeometry().setFromPoints(geometryPoints);
